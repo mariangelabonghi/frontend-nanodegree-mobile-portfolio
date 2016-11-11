@@ -450,8 +450,10 @@ var resizePizzas = function(size) {
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
     //MARIANGELA Move out of the loop all the evaluation of the list of the elements within the document
-    var dx = determineDx(document.querySelector(".randomPizzaContainer"), size);
-    var newwidth = (document.querySelector(".randomPizzaContainer").offsetWidth + dx) + 'px';
+    //MARIANGELA Cache the DOM call into DOMvar variable
+    var DOMvar = document.querySelector(".randomPizzaContainer");
+    var dx = determineDx(DOMvar, size);
+    var newwidth = (DOMvar.offsetWidth + dx) + 'px';
     var elem = document.querySelectorAll(".randomPizzaContainer");
     //for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
     for (var i = 0; i < elem.length; i++) {
@@ -515,7 +517,8 @@ function updatePositions() {
     var phase = Math.sin(scrollTop + (i % 5));
     //MARIANGELA: Use .transform and translate instead of .left
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-    var trnX = items[i].basicLeft + 200 * phase + 'px';
+    //MARIANGELA Fix the evaluation of the variable "trnX" in order to replicate the original pizza movement
+    var trnX = -items[i].basicLeft + 1000 * phase + 'px';
         items[i].style.transform = "translateX("+trnX+") translateZ(0)";
   }
 
@@ -540,7 +543,8 @@ window.addEventListener('scroll', function() {
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+//MARIANGELA 200 pizzas are too many: 35 are enough
+  for (var i = 0; i < 35; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
