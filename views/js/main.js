@@ -518,8 +518,10 @@ function updatePositions() {
     //MARIANGELA: Use .transform and translate instead of .left
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
     //MARIANGELA Fix the evaluation of the variable "trnX" in order to replicate the original pizza movement
-    var trnX = -items[i].basicLeft + 1000 * phase + 'px';
-        items[i].style.transform = "translateX("+trnX+") translateZ(0)";
+    //var trnX = -items[i].basicLeft + 1000 * phase + 'px';
+    //    items[i].style.transform = "translateX("+trnX+") translateZ(0)";
+    //MARIANGELA Fix in order to replicate the original pizza movement
+    items[i].style.transform = "translateX(" + 100 * phase + "px)";
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -550,7 +552,9 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
-    elem.basicLeft = (i % cols) * s;
+    //MARIANGELA Fix: Substitution of the following line because of the use of translateX context of the transform property
+    //elem.basicLeft = (i % cols) * s;
+    elem.style.left = (i % cols) * s + 'px';
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
